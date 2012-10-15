@@ -117,14 +117,14 @@ script:
 
 ### Run Sismo with the built-in web server ###
 
-If you are running Sismo with PHP 5.4.0, you can use the Sismo build-in web
-server:
+If you are running Sismo (with the single PHP file) with PHP 5.4.0,
+you can use the Sismo build-in web server:
 
     php sismo.php run localhost:9000
 
 And then open the browser and point it to
 
-    http://localhost:9000/sismo.php
+    http://localhost:9000
 
 Limitations
 -----------
@@ -182,6 +182,25 @@ Using Sismo for remote repositories is as simple as adding the Sismo building
 tool in a crontab entry:
 
     0 12 * * * php /path/to/sismo.php --quiet
+
+For GitHub projects, and other systems that support post-receive URL hooks,
+you can set up Sismo to build automatically when a new revision is pushed.
+You need to set an environment variable in your Apache configuration::
+
+    # in a .htaccess or httpd.conf Apache configuration file
+
+    SetEnv SISMO_BUILD_TOKEN "YOUR_TOKEN"
+
+You can also set an environment variable in your config file
+(``~/.sismo/config.php``)::
+
+    putenv('SISMO_BUILD_TOKEN=YOUR_TOKEN');
+
+Replace YOUR_TOKEN with something more secure, as anyone with this token
+could use it to trigger builds. Then set your post-receive URL appropriately.
+For example::
+
+    http://path/to/sismo.php/your_project/build/YOUR_TOKEN
 
 History in the Web Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
