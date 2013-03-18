@@ -36,7 +36,7 @@ class Builder
             'clone'    => 'clone --progress --recursive %repo% %dir% --branch %localbranch%',
             'fetch'    => 'fetch origin',
             'prepare'  => 'submodule update --init --recursive',
-            'checkout' => 'checkout -q %branch%',
+            'checkout' => 'checkout -q -f %branch%',
             'reset'    => 'reset --hard %revision%',
             'show'     => 'show -s --pretty=format:%format% %revision%',
         ), $gitCmds);
@@ -117,7 +117,7 @@ class Builder
             '%dir%'         => escapeshellarg($this->buildDir),
             '%branch%'      => escapeshellarg('origin/'.$this->project->getBranch()),
             '%localbranch%' => escapeshellarg($this->project->getBranch()),
-            '%format%'      => escapeshellarg('%H%n%an%n%ci%n%s%n'),
+            '%format%'      => '"%H%n%an%n%ci%n%s%n"',
         ), $replace);
 
         return strtr($this->gitPath.' '.$this->gitCmds[$command], $replace);
