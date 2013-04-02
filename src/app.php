@@ -18,14 +18,16 @@ use Sismo\Storage\Storage;
 use Sismo\Builder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\HttpFoundation\Response;
+use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
 
 $app = new Application();
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
-    'twig.path'      => __DIR__.'/templates',
+    'twig.path' => __DIR__.'/templates',
 ));
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
     $twig->setCache($app['twig.cache.path']);
+    $twig->addGlobal('ansi_to_html', new AnsiToHtmlConverter());
 
     return $twig;
 }));
@@ -41,6 +43,7 @@ $app['db.path']     = $app->share(function ($app) {
 
     return $app['data.path'].'/sismo.db';
 });
+$app['build.token']     = getenv('SISMO_BUILD_TOKEN');
 $app['twig.cache.path'] = $app->share(function ($app) { return $app['data.path'].'/cache'; });
 $app['git.path']        = getenv('SISMO_GIT_PATH') ?: 'git';
 $app['git.cmds']        = array();
