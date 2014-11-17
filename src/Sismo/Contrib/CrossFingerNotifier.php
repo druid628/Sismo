@@ -48,8 +48,8 @@ class CrossFingerNotifier extends Notifier
     /**
      * Notifies a commit.
      *
-     * @param Commit $commit Then Commit instance
-     * @return Boolean whether notification has been sent or not
+     * @param  Commit  $commit Then Commit instance
+     * @return bool whether notification has been sent or not
      */
     public function notify(Commit $commit)
     {
@@ -68,8 +68,8 @@ class CrossFingerNotifier extends Notifier
      * Determines if a build needs to be notify
      * based on his status and his predecessor's one
      *
-     * @param Commit $commit The commit to analyse
-     * @return Boolean whether the commit need notification or not
+     * @param  Commit  $commit The commit to analyse
+     * @return bool whether the commit need notification or not
      */
     protected function commitNeedNotification(Commit $commit)
     {
